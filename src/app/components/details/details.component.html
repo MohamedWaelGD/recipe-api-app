@@ -1,0 +1,101 @@
+<div class="container pt-3" *ngIf="recipe">
+    <h1 class="text-decoration-underline item-container">Recipe > {{recipe.title}}</h1>
+    <div class="position-relative mb-3">
+        <img class="img-fluid w-100" style="height: 600px; object-fit: cover; " [src]="recipe.image" />
+        <div class="position-absolute top-0 bottom-0 w-100" style="background-image: radial-gradient(circle, #ffffff00, #ffffff00, #ffffff00, #000000);"></div>
+    </div>
+    <div class="d-flex justify-content-between">
+        <h4>Price: <span>{{recipe.pricePerServing}}$</span></h4>
+        <div class="d-flex align-items-center">
+            <h4 class="me-2">Health</h4>
+            <div class="progress" style="width: 300px;">
+                <div class="progress-bar bg-success {{getHealthColor(recipe.healthScore)}}"
+                    role="progressbar" [style.width.%]="recipe.healthScore" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex gap-2 flex-wrap">
+        <button class="btn btn-danger text-white" *ngFor="let item of recipe.dishTypes">{{item}}</button>
+    </div>
+    <hr/>
+    <div class="item-container">
+        <h1>Diets</h1>
+        <ul>
+            <li *ngFor="let item of recipe.diets">{{item}}</li>
+        </ul>
+    </div>
+    <div class="item-container">
+        <h1>Properties</h1>
+        <ul>
+            <li><strong>Vegetarian:</strong> {{recipe.vegetarian ? "Yes" : "No"}}</li>
+            <li><strong>Healthy:</strong> {{recipe.veryHealthy ? "Yes" : "No"}}</li>
+            <li><strong>Popular:</strong> {{recipe.veryPopular ? "Yes" : "No"}}</li>
+            <li><strong>low Fodmap:</strong> {{recipe.lowFodmap ? "Yes" : "No"}}</li>
+            <li><strong>Sustainable:</strong> {{recipe.sustainable ? "Yes" : "No"}}</li>
+            <li><strong>Gluten Free:</strong> {{recipe.glutenFree ? "Yes" : "No"}}</li>
+            <li><strong>Dairy Free:</strong> {{recipe.dairyFree ? "Yes" : "No"}}</li>
+            <li><strong>Cheap:</strong> {{recipe.cheap ? "Yes" : "No"}}</li>
+        </ul>
+    </div>
+    <div class="item-container">
+        <h1>Occasions</h1>
+        <ul>
+            <li *ngFor="let item of recipe.occasions">{{item}}</li>
+        </ul>
+    </div>
+    <div class="item-container">
+        <h1>Instractions</h1>
+        <div [innerHtml]="recipe.instructions"></div>
+    </div>
+    <div class="item-container">
+        <h1>Ingredients</h1>
+        <div class="row">
+            <div class="p-2 col-lg-3 col-md-4 col-sm-6 col-12" *ngFor="let ingredient of recipe.extendedIngredients">
+                <div class="border-2 border rounded px-3 py-2 h-100" style="background-color: rgb(241, 241, 241);">
+                    <img class="img-fluid w-100" style="object-fit: contain; height: 125px;" src="https://spoonacular.com/cdn/ingredients_500x500/{{ingredient.image}}"/>
+                    <dl>
+                        <dt *ngIf="ingredient.name">Name</dt>
+                        <dd>{{ingredient.name}}</dd>
+                        <dt *ngIf="ingredient.original">Description</dt>
+                        <dd>{{ingredient.original}}</dd>
+                        <dt *ngIf="ingredient.aisle">Aisle</dt>
+                        <dd>{{ingredient.aisle}}</dd>
+                        <dt *ngIf="ingredient.amount">Amount</dt>
+                        <dd>{{ingredient.amount}}</dd>
+                        <dt *ngIf="ingredient.consistency">Consistency</dt>
+                        <dd>{{ingredient.consistency}}</dd>
+                        <dt *ngIf="ingredient.unit">Unit</dt>
+                        <dd>{{ingredient.unit}}</dd>
+                        <dt *ngIf="ingredient.measures.metric">Measues in metric</dt>
+                        <ul>
+                            <li>
+                                Amount: {{ingredient.measures.metric.amount}}
+                            </li>
+                            <li>
+                                Unit long: {{ingredient.measures.metric.unitLong}}
+                            </li>
+                            <li>
+                                Unit short: {{ingredient.measures.metric.unitShort}}
+                            </li>
+                        </ul>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="item-container">
+        <h1>Summary</h1>
+        <div class="px-3 text-indent" [innerHtml]="recipe.summary"></div>
+    </div>
+    <div class="item-container" *ngIf="recipe.sourceName">
+        <h1>Sources</h1>
+        <ol class="d-flex flex-column">
+            <li>
+                <a target="_blank" href="{{recipe.sourceUrl}}">{{recipe.sourceUrl}}</a>
+            </li>
+            <li>
+                <a target="_blank" href="{{recipe.spoonacularSourceUrl}}">{{recipe.spoonacularSourceUrl}}</a>
+            </li>
+        </ol>
+    </div>
+</div>
